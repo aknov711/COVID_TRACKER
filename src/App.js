@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import "./App.css";
 import {
   MenuItem,
@@ -32,10 +33,15 @@ function App() {
 
   const [mapcenter, setmapcenter] = useState({ lat: 34.0746, lng: 40.4796 });
   const [mapzoom,setmapzoom]=useState(3);
-  const [lat,setlat]=useState(34.056)
-  const [lng,setlng]=useState(89.890)
+  const [lat,setlat]=useState(34.0746)
+  const [lng,setlng]=useState(40.4796)
+
+  const [plat,setplat]=useState(null)
+  const [plng,setplng]=useState(null)
+
   const [mapcountry,setmapcountry]=useState([]);
   const [casesType,setCasesType]=useState("cases");
+  const [bool,setbool]=useState(0);
 
   const[prevlat,setPrevlat]=useState({ lat: 34.0746, lng: 40.4796 });
   
@@ -72,6 +78,11 @@ function App() {
     }, []
   )
 
+  const gooo=()=>{
+    setplng(lng);
+    setplat(lat);
+  }
+
  
 
   const onCountryChange=async (event)=>{
@@ -85,12 +96,11 @@ function App() {
       await fetch(url)
       .then((response)=>response.json())
       .then((data)=>{
-        
-        setlat(data.countryInfo.lat);
-        setlng(data.countryInfo.long);
+       
+        setmapcenter({lat:data.countryInfo.lat,lng:data.countryInfo.long})
         setcountry(countrycode);
         setcountryInfo(data);
-        setmapzoom(7);
+        setmapzoom(4);
        
        
       });
@@ -103,13 +113,15 @@ function App() {
 
   return (
     <div className="app">
+     
     <div className="app_left">
     <div className="app_header">
-        <h1 style={{color:'tomato'}}>Welocome to COVID-19 Tracker</h1>
-        <FormControl className="app_dropdown" style={{backgroundColor:'grey'}}>
+    <changeMapView></changeMapView>
+        <h1 style={{color:'black'}}>Welocome to COVID-19 Tracker</h1>
+        <FormControl className="app_dropdown" style={{backgroundColor:'white'}}>
           <Select 
           onChange={onCountryChange}
-          variant="outlined" value={country } style={{color:'white'}}  >
+          variant="outlined" value={country } style={{color:'black',fontWeight:'bold'}}  >
             
              
              <MenuItem value="worldwide">Worldwide</MenuItem>
@@ -122,23 +134,40 @@ function App() {
         </FormControl>
       </div>
 
-      <div className="app_stats">
-        <Infobox title="Corona Virus Cases" cases={CountryInfo.todayCases} total={CountryInfo.cases}></Infobox>
-        <Infobox title="Recovered" cases={CountryInfo.todayRecovered} total={CountryInfo.recovered}></Infobox>
-        <Infobox title="Deaths" cases={CountryInfo.deaths} total={CountryInfo.deaths}></Infobox>
-      </div>
-    
+      <div className="app__stats">
+        <Infobox  onClick={(e) => setCasesType("cases")} title="Corona Virus Cases" 
+          isRed
+          active={casesType==='cases'}
+        cases={CountryInfo.todayCases} total={CountryInfo.cases}></Infobox>
 
-      
+        <Infobox onClick={(e) => setCasesType("recovered")} title="Recovered" cases={CountryInfo.todayRecovered} 
+          active={casesType==='recovered'}
+        total={CountryInfo.recovered}></Infobox>
+        <Infobox onClick={(e) => setCasesType("deaths")} title="Deaths" cases={CountryInfo.deaths}
+            active={casesType==='deaths'}
+         total={CountryInfo.deaths}></Infobox>
+      </div>
+
+     
+    
+   
       <Map 
 
         
-        countries={mapcountry}
-        casesType={casesType}
-         center={{lat:lat,lng:lng}}
-       
-         zoom={mapzoom}
-       />
+countries={mapcountry}
+casesType={casesType}
+
+  center={mapcenter}
+ 
+
+
+ zoom={mapzoom}
+ 
+ 
+/>
+
+      
+  
       
        
     </div>
@@ -150,10 +179,10 @@ function App() {
             </h3>
             <Table style={{height:'400px'}}countries={tabledata}></Table>
             <h3>
-              Worldwide new Cases
+              Worldwide new {casesType}
             </h3>
          
-             <LineGraph casesType='cases'/> 
+             <LineGraph casesType={casesType}/> 
           </CardContent>
     </Card>
     
