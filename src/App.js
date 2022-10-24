@@ -138,6 +138,8 @@ function App() {
         <Infobox  onClick={(e) => {setCasesType("cases");
         setIsRed(true);}} title="Corona Virus Cases" 
           isRed = {isRed}
+          casesType={casesType}
+          color={"blue"}
           active={casesType==='cases'}
         cases={CountryInfo.todayCases} total={CountryInfo.cases}></Infobox>
 
@@ -145,9 +147,13 @@ function App() {
         console.log( casesType);
         setIsRed(false);}} title="Recovered"  isRed= {isRed} cases={CountryInfo.todayRecovered} 
           active={casesType==='recovered'}
+          casesType={casesType}
+          color={"green"}
         total={CountryInfo.recovered}></Infobox>
         <Infobox onClick={(e) => setCasesType("deaths")} title="Deaths" cases={CountryInfo.deaths}
             active={casesType==='deaths'}
+            casesType={casesType}
+            color={"red"}
          total={CountryInfo.deaths}></Infobox>
       </div>
 

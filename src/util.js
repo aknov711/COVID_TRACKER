@@ -28,15 +28,20 @@ export const sortData =function(data){
 
 
 
-export const showDataonMap=(data,casesType)=>{
-    console.log(casesType)
-    return data.map((country)=>(
+export const ShowDataonMap=({ data, casesType })=>{
+    console.log("casesType", data, casesType, casesTypeColors[casesType]?.hex)
+    if(!data) {
+      return null;
+    }
+    return data?.map((country)=>(
        <Circle
          center={[country.countryInfo.lat,country.countryInfo.long]}
-         color={casesTypeColors[casesType].hex}
-         fillColor={casesTypeColors[casesType].hex}
+         pathOptions={{
+          color: casesTypeColors[casesType].hex,
+          fillColor: casesTypeColors[casesType].hex
+          }}
          fillOpacity={0.4}
-         
+         casesType={casesType}
          radius={
         Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
       }
