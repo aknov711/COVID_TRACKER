@@ -14,6 +14,18 @@
   border-color: #cc1034;
 }
 
+.infoBox--green {
+  border-color: green;;
+}
+
+.infoBox--yellow {
+  border-color: yellow;
+}
+
+.infoBox--blue {
+  border-color: blue;
+}
+
 .infoBox__cases--green {
   color: #cc1034!important;
 }
