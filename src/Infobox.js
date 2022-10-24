@@ -4,8 +4,6 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import "./InfoBox.css";
 
 function InfoBox({ title, cases, total, active, isRed, ...props }) {
-///  console.log(title, active);
-
 
   return (
     <Card
@@ -24,7 +22,7 @@ function InfoBox({ title, cases, total, active, isRed, ...props }) {
         </h2>
 
         <Typography className="infoBox__total" color="textSecondary">
-          {total} Total
+           Total {total}
         </Typography>
       </CardContent>
     </Card>

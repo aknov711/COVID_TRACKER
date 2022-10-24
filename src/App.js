@@ -42,7 +42,7 @@ function App() {
   const [mapcountry,setmapcountry]=useState([]);
   const [casesType,setCasesType]=useState("cases");
   const [bool,setbool]=useState(0);
-
+  const [isRed,setIsRed]=useState(true);
   const[prevlat,setPrevlat]=useState({ lat: 34.0746, lng: 40.4796 });
   
 
@@ -135,12 +135,15 @@ function App() {
       </div>
 
       <div className="app__stats">
-        <Infobox  onClick={(e) => setCasesType("cases")} title="Corona Virus Cases" 
-          isRed
+        <Infobox  onClick={(e) => {setCasesType("cases");
+        setIsRed(true);}} title="Corona Virus Cases" 
+          isRed = {isRed}
           active={casesType==='cases'}
         cases={CountryInfo.todayCases} total={CountryInfo.cases}></Infobox>
 
-        <Infobox onClick={(e) => setCasesType("recovered")} title="Recovered" cases={CountryInfo.todayRecovered} 
+        <Infobox onClick={(e) => {setCasesType("recovered");
+        console.log( casesType);
+        setIsRed(false);}} title="Recovered"  isRed= {isRed} cases={CountryInfo.todayRecovered} 
           active={casesType==='recovered'}
         total={CountryInfo.recovered}></Infobox>
         <Infobox onClick={(e) => setCasesType("deaths")} title="Deaths" cases={CountryInfo.deaths}

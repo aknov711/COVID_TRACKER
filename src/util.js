@@ -1,18 +1,19 @@
 import React from 'react'
 import {Circle,Popup} from 'react-leaflet'
 import numeral from 'numeral'
+import { red } from '@material-ui/core/colors';
 
 const casesTypeColors = {
      cases: {
-       hex: "#CC1034",
+       hex: 'blue',
         multiplier: 100,
      },
      recovered: {
-       hex: "#7dd71d",
+       hex: 'green',
        multiplier: 420,
      },
      deaths: {
-       hex: "#fb4443",
+       hex: 'red',
         multiplier: 600,
      },
    };
@@ -27,8 +28,9 @@ export const sortData =function(data){
 
 
 
-export const showDataonMap=(data,casesType='cases')=>
-    data.map((country)=>(
+export const showDataonMap=(data,casesType)=>{
+    console.log(casesType)
+    return data.map((country)=>(
        <Circle
          center={[country.countryInfo.lat,country.countryInfo.long]}
          color={casesTypeColors[casesType].hex}
@@ -61,4 +63,4 @@ export const showDataonMap=(data,casesType='cases')=>
          </Popup>
        </Circle>
     ))
-     
+    }
